@@ -1,6 +1,7 @@
 const express=require('express');
 const bodyParser=require('body-parser');
 const session = require('express-session');
+const Conexion=require('./BBDD')
 const ejs =require('ejs');
 require('dotenv').config();
 
@@ -15,11 +16,18 @@ app.use(session({
 }));
 
 app.get("/login",(req, res)=>{
-    res.render('login.ejs');
+    res.render('login.ejs',{'msg':undefined});
 })
 app.post("/login",(req,res)=>{
-    
-    res.send("ok")
+    let con=new Conexion();
+    con.login(req.body.email,req.body.pass,(validacion)=>{
+        if(validacion){
+
+        }else{
+             res.render('login.ejs',{msg:'usuario o pass incorrecto'})           
+        }
+    });
+
 })
 
 
