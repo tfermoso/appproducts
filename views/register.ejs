@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP Products</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/login.js"></script>
+</head>
+
+<body id="body_login">
+    <form action="" style="width: 22rem;" method="POST">
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <input name="username" type="text" id="" class="form-control" required />
+            <label class="form-label" for="form2Example1">User name</label>
+        </div>
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <input name="email" type="email" id="form2Example1" class="form-control" required />
+            <label class="form-label" for="form2Example1">Email address</label>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input name="pass" type="password" id="pass" class="form-control" />
+            <label class="form-label" for="pass">Password</label>
+        </div>
+        <div class="form-outline mb-4">
+            <input type="password" id="repass" class="form-control" />
+            <label class="form-label" for="repass">Password</label>
+        </div>
+
+
+
+        <!-- Submit button -->
+        <button type="submit" id="btnSubmit" class="btn btn-primary btn-block mb-4">Register</button>
+
+        <!-- Register buttons -->
+        <div class="text-center">
+            <p>Login? <a href="/login">Login</a></p>
+
+        </div>
+    </form>
+    <div><%= typeof msg != 'undefined' ? msg : '' %></div>
+    
+</body>
+
+</html>

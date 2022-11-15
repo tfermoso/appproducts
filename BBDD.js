@@ -25,6 +25,20 @@ class Conexion{
         );
     }
 
+    register(user,callback){
+        let self=this;
+        this.connection.execute(
+            'INSERT INTO user (username,email,password) values (?,?,?)',
+            [user.username, user.email,user.pass],
+            function (err, results, fields) {
+                let resultadoValidacion=(results > 0)
+                self.connection.end();
+                callback(resultadoValidacion)
+            }
+        );
+ 
+    }
+
     getDatos(callback){
         let self=this;
         this.connection.execute(
