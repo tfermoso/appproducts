@@ -14,11 +14,18 @@ class Conexion{
 
     login(user,pass,callback){
         let self=this;
+        let resultadoValidacion=false;
         this.connection.execute(
-            'SELECT * FROM users where username=? and password=?',
+            'SELECT * FROM user where email=? and password=?',
             [user, pass],
             function (err, results, fields) {
-                let resultadoValidacion=(results.length > 0)
+                if(err!=undefined){
+                    console.log(err)
+                   
+                }else{
+                  resultadoValidacion=(results.length > 0)
+                  
+                }
                 self.connection.end();
                 callback(resultadoValidacion)
             }
