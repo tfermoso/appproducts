@@ -8,7 +8,7 @@ const route = express.Router();
 route.get("/", (req, res) => {
     res.render('login.ejs');
 })
-route.post("/", (req, res) => {
+route.post("/", (req, response) => {
     let con = new Conexion();
     const hash = crypto.createHash('sha256', process.env.SECRET)
         // updating data
@@ -17,23 +17,31 @@ route.post("/", (req, res) => {
         .digest('hex');
     con.login(req.body.email, hash, (validacion) => {
         if (validacion) {
+            req.session.user = {
+                email: req.body.email,
+            }
             fetch('http://localhost:8080/login', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ user: process.env.user_api, pass: process.env.pass_api })
-            })
-            .then(res => res.json())
-            .then(res => {
-                token=res.data.token;
-                session.user={
-                    email:req.body.email,
-                    token
-                }
-                res.send("todo ok")
-            });
-            
+            })                
+                .then(
+                    (res) => {
+                        if (res != undefined)
+                            return res.json();
+                            throw new Error('Something went wrong');
+                    })
+                .then(res => {
+                    token = res.data.token;
+                    req.session.user.token = token;
+                    response.redirect("/producto")
+                })
+                .catch((err) => {
+                    console.log(err);
+                    response.redirect("/producto")                });
+
         } else {
             res.render('login.ejs', { msg: 'usuario o pass incorrecto' })
         }
